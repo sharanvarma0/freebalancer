@@ -1,5 +1,6 @@
 package com.infra.freebalancer.utils;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,47 +32,39 @@ import org.springframework.core.io.ClassPathResource;
 @Data
 public class ConfigLoader {
 
-  private static Logger logger;
+  private static Logger logger = Logger.getLogger("ConfigLoader");
   private static String configFilePath = "config.json";
-  private static String jsonFileContent = null;
+  private static JsonNode jsonFileContent = null;
+  private static Config lbConfig = null;
 
   private static boolean readJsonFile(ClassPathResource clps) {
     try (InputStream istream = clps.getInputStream()) {
-      jsonFileContent = new String(istream.readAllBytes());
-      if (jsonFileContent.isEmpty()) {
-        logger.fine("Unable to load JSON config. File seems empty");
+        ObjectMapper objMapper = new ObjectMapper();
+      lbConfig = (objMapper.readValue(istream, new TypeReference<Config>(){}));
+      if (lbConfig == null) {
+        System.out.println("Unable to load JSON config. File seems empty");
         return false;
       }
-      logger.fine("Loaded config from config.json");
+      System.out.println("Loaded config from config.json");
       return true;
     } catch (IOException ioex) {
-      logger.fine("Exception when attempting to read config file: " + ioex);
+      System.out.println("Exception when attempting to read config file: " + ioex);
     }
     return false;
   }
 
   public static Config getConfig() {
     ClassPathResource configFile = new ClassPathResource(configFilePath);
-    Config config = null;
 
     if (!configFile.exists() || !configFile.isFile()) {
-      logger.fine("Invalid config file (config.json). File does not seem to exist or is not a valid file");
+      System.out.println("Invalid config file (config.json). File does not seem to exist or is not a valid file");
       return null;
     }
 
     if (!readJsonFile(configFile)) {
-      logger.fine("Unable to read JSON config File");
+      System.out.println("Unable to read JSON config File");
       return null;
     }
-
-    ObjectMapper objMapper = new ObjectMapper();
-    try {
-      config = objMapper.readValue(jsonFileContent, Config.class);
-      logger.fine("Generated Config class");
-    } catch (Exception jsonmex) {
-      logger.finest("Failed to properly map JSON config to JAVA object: " + jsonmex);
-    }
-
-    return config;
+    return lbConfig;
   }
 }

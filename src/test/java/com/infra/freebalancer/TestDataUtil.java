@@ -39,6 +39,5 @@ public class TestDataUtil {
         testNodes.add(createTestHttpNodeC());
 
         return new RoundRobinLoadBalancer(testNodes);
-
     }
 }

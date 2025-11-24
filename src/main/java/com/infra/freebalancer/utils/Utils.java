@@ -25,7 +25,7 @@ public class Utils {
     ArrayList<Node> initializedNodes = new ArrayList<Node>();
 
     for (NodeConfig config : nodes) {
-      String ipAddress = config.ipAddress;
+      String ipAddress = config.address;
       Integer port = config.port;
 
       HttpClient newClient = createNewHttpClient();
