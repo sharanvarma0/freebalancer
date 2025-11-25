@@ -7,12 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Table;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "nodes")
-public class Node {
+public class Node implements Serializable {
 
   @Id
   private Long id;

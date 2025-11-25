@@ -1,5 +1,6 @@
 package com.infra.freebalancer.models;
 
+import java.io.Serializable;
 import java.sql.Time;
 
 import jakarta.persistence.Entity;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "responses")
-public class Response {
+public class Response implements Serializable {
 
   @Id
   private Long id;
