@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Component
 public class RoundRobinLoadBalancer implements LoadBalancer {
   private ArrayList<Node> listOfNodes = null;
-  private Integer currentNode = 0;
+  private static Integer currentNode = 0;
   private Logger logger = Logger.getLogger("com.infra.freebalancer.services");
 
   public RoundRobinLoadBalancer(ArrayList<Node> httpNodes) {
