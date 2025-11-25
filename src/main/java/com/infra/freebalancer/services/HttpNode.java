@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import java.net.URI;
 
-@Component
 public class HttpNode implements Node {
   private String ipAddress;
   private Integer port;
