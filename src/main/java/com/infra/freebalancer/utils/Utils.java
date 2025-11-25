@@ -13,7 +13,7 @@ import java.net.URI;
 import java.net.http.*;
 
 public class Utils {
-  public static Logger logger;
+  public static Logger logger = Logger.getLogger("Utils");
 
   public static HttpClient createNewHttpClient() {
     HttpClient client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(20)).build();
