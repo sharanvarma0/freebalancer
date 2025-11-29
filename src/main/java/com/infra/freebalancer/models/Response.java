@@ -1,11 +1,9 @@
 package com.infra.freebalancer.models;
 
 import java.io.Serializable;
-import java.sql.Time;
+import com.infra.freebalancer.interfaces.Node;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +16,15 @@ import lombok.NoArgsConstructor;
 public class Response implements Serializable {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
   private Request requestId;
-  private Node servedBy;
-  private Time responseTime;
+  private String servedBy;
+  private Long responseTime;
+
+  public Response(Request requestId, String servedBy, Long responseTime) {
+      this.requestId = requestId;
+      this.servedBy = servedBy;
+      this.responseTime = responseTime;
+  }
 }

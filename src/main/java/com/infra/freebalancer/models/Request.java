@@ -1,11 +1,10 @@
 package com.infra.freebalancer.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.repository.CrudRepository;
 
 import java.io.Serializable;
 
@@ -17,8 +16,15 @@ import java.io.Serializable;
 public class Request implements Serializable {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
   private String method;
   private String sourceIpAddress;
   private String path;
+
+    public Request(String method, String sourceIp, String path) {
+        this.method = method;
+        this.sourceIpAddress = sourceIp;
+        this.path = path;
+    }
 }
